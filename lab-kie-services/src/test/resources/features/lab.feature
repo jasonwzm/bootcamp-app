@@ -22,6 +22,16 @@ Feature: Book Artists at Venues
     And a dated request for a "ORCHESTRA" performance by "The Brooklyn Symphony ORCHESTRA" from "01-01-2016 01:30:00" to "01-01-2016 02:30:00"
     When validating the booking
     Then the booking should be "REVOKED"
+    
+   Scenario: Deny a BAND to play an encompased timeslot
+    Given a venue "The Cellar" with an occupancy of "200"
+    And the venue accomodates performances by a
+      | BAND      |
+      | ORCHESTRA |
+    And an existing "BAND" performance by "The Clash" from "01-02-2016 01:00:00" to "01-04-2016 02:00:00"
+    And a dated request for a "ORCHESTRA" performance by "The Brooklyn Symphony ORCHESTRA" from "01-01-2016 01:30:00" to "01-05-2016 02:30:00"
+    When validating the booking
+    Then the booking should be "REVOKED"
 
   Scenario: Allow a BAND to play an open timeslot
     Given a venue "The Cellar" with an occupancy of "200"

@@ -60,7 +60,7 @@ public class BookingValidationSteps {
 
 		request.setVenueName(venueName);
 
-		logger.info("Given step: " + venueName + " " + occupancy);
+		logger.debug("Given step: " + venueName + " " + occupancy);
 	}
 
 	@Given("^an existing \"(.*?)\" performance by \"(.*?)\" from \"(.*?)\" to \"(.*?)\"$")
@@ -82,7 +82,7 @@ public class BookingValidationSteps {
 		booking.setClose(dClose);
 		booking.setVenueName(venue.getName());
 
-		logger.info("saving previous booking " + booking.toString());
+		logger.debug("saving previous booking " + booking.toString());
 		bookingRepo.save(booking);
 
 	}
@@ -97,7 +97,7 @@ public class BookingValidationSteps {
 
 		venue.setAccomodations(accomodations);
 
-		logger.info("And first step: " + artistTypes);
+		logger.debug("And first step: " + artistTypes);
 
 	}
 
@@ -114,7 +114,7 @@ public class BookingValidationSteps {
 		}
 		request.setPerformer(performer);
 
-		logger.info("And second step: " + type + " " + artistName);
+		logger.debug("And second step: " + type + " " + artistName);
 	}
 
 	@And("^a dated request for a \"(.*?)\" performance by \"(.*?)\" from \"(.*?)\" to \"(.*?)\"$")
@@ -138,7 +138,7 @@ public class BookingValidationSteps {
 		request.setClose(dClose);
 		request.setVenueName(venue.getName());
 
-		logger.info("And second step: " + request.toString());
+		logger.debug("And second step: " + request.toString());
 	}
 
 	@Then("^the booking should be \"(.*?)\"$")
@@ -164,14 +164,14 @@ public class BookingValidationSteps {
 				BookingResponse.class);
 		saveBooking(response);
 
-		logger.info("When step");
+		logger.debug("When step");
 	}
 
 	private List<Object> buildSession(BookingRequest request) {
-		logger.info("collect venue: " + request.getVenueName());
+		logger.debug("collect venue: " + request.getVenueName());
 		List<Venue> venue = venueRepo.findByName(request.getVenueName());
 
-		logger.info("venue found:" + venue);
+		logger.debug("venue found:" + venue);
 		List<Booking> bookings = bookingRepo.findByVenueName(request
 				.getVenueName());
 
@@ -185,14 +185,15 @@ public class BookingValidationSteps {
 	private boolean saveBooking(BookingResponse response) {
 
 		// Attempt to implement logger
-		logger.info("Session returned: " + response.toString());
+		logger.debug("Session returned: " + response.toString());
 
 		Booking booking = response.generateBooking();
 		try {
 			// attempting to save the bookings returned
 			if (response.getBookingStatus().iterator().next() == BookingStatus.CONFIRMED) {
 
-				logger.info("Attempting to save booking: " + booking.toString());
+				logger.debug("Attempting to save booking: "
+						+ booking.toString());
 				bookingRepo.save(booking);
 			}
 		} catch (Exception e) {

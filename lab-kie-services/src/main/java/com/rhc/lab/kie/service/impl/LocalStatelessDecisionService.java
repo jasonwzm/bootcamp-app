@@ -71,9 +71,9 @@ public class LocalStatelessDecisionService implements StatelessDecisionService {
 		BatchExecutionCommand batchExecutionCommand = createBatchExecutionCommand(
 				facts, processId, responseClazz);
 
-		// only use in test situations
-		session.addEventListener(new DebugRuleRuntimeEventListener());
-		session.addEventListener(new DebugAgendaEventListener());
+		// uncomment for Event Logs
+		// session.addEventListener(new DebugRuleRuntimeEventListener());
+		// session.addEventListener(new DebugAgendaEventListener());
 
 		ExecutionResults results = session.execute(batchExecutionCommand);
 

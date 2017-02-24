@@ -77,6 +77,22 @@ rule "Case 2 - Venue revokes requests for busy venues"
 end
 
 // XXX-Instructions
+rule "Case 3 - Venue revokes requests for busy venues"
+	ruleflow-group "validate"
+	dialect "mvel"
+	when
+		
+		$bookingRequest: BookingRequest($venueName : venueName, $requestOpen : open, $requestClose : close)
+		Booking(
+					venueName == $venueName
+					, $requestOpen before open
+					, $requestClose after close
+		)
+	then
+		insert(BookingStatus.REVOKED);
+end
+
+// XXX-Instructions
 rule "Confirm booking if all validations pass"
 	ruleflow-group "confirm"
 	when 
