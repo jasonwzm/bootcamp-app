@@ -21,7 +21,7 @@
 
 	<context-param>
      <param-name>spring.profiles.active</param-name>
-     <param-value>default</param-value>
+     <param-value>openshift</param-value>
 	</context-param>
 
 	<listener>
